@@ -1,0 +1,58 @@
+@import '~prismjs/themes/prism-tomorrow.css'
+@keyframes gradient {
+  0% {
+    background-position: 0 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0 50%
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0 50%
+  }
+}
+
+#nprogress {
+  .bar {
+    position: fixed !important;
+    left: 50% !important;
+    width: 80px !important;
+    background: transparent !important;
+    transform: translateX(-50%) !important;
+    height: 9px !important;
+    margin: 0 auto !important;
+    top: 8px !important;
+    overflow: hidden !important;
+    border-radius: 4px !important;
+    border: 1px solid #42444a !important;
+
+    .peg {
+      width: 100px !important;
+      background: linear-gradient(215deg, #4584ff 0%, #cf0db9 100%) !important;
+      background-size: 200% !important;
+      box-shadow: none !important;
+      animation: gradient 2s ease infinite !important;
+    }
+  }
+}
+
+img {
+  max-width: 100%;
+  -webkit-transition: all .2s;
+  -moz-transition: all .2s;
+  -o-transition: all .2s;
+  -ms-transition: all .2s;
+  transition: all .2s;
+}
