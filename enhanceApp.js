@@ -12,11 +12,6 @@ export default ({Vue, options, router, siteData, isServer}) => {
                 });
             })
 
-            import('vue-awesome-swiper').then(({swiper, swiperSlide}) => {
-                Vue.component('swiper', swiper)
-                Vue.component('swiperSlide', swiperSlide)
-            })
-
             import('vue-tribute').then(VueTribute => {
                 Vue.component('VueTribute', VueTribute.default)
             })

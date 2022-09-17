@@ -2,9 +2,11 @@
   <div id="home_top">
     <div id="bbTimeList">
       <div class="bb_title"><span>即刻</span></div>
-      <swiper id="bb-talk" class="swiper" :options="swiperOption">
-        <swiperSlide class="li-style" v-for="(el,i) in bbLIst" :key="i">{{ el.title }}</swiperSlide>
-      </swiper>
+      <div ref="swiper" id="bb-talk" class="swiper swiper-no-swiping">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide li-style" v-for="(el,i) in bbLIst" :key="i">{{ el.title }}</div>
+        </div>
+      </div>
       <div class="more">
         <font-awesome-icon class="banner-right icon" :icon="['fas', 'arrow-circle-right']"/>
       </div>
@@ -78,25 +80,35 @@
 </template>
 
 <script>
-import 'swiper/dist/css/swiper.css'
+import Swiper, {Autoplay} from 'swiper'
+import 'swiper/swiper-bundle.min.css'
 
 export default {
   data() {
     return {
-      swiperOption: {
-        direction: 'vertical',
-        autoplay: true,
-      },
       bbLIst: [{title: "呃呃呃呃呃呃呃呃"}, {title: "哈哈哈哈哈哈"}],
       post: [],
     }
   },
   mounted() {
     this.initPost()
+    this.initSwiper()
   },
   methods: {
     initPost() {
       this.post = this.$pagination['_matchedPages'].filter(e => e.frontmatter.recommend).filter((e, i) => i < 6)
+    },
+    initSwiper() {
+      new Swiper(this.$refs.swiper, {
+        modules: [Autoplay],
+        loop: true,
+        direction: 'vertical',
+        autoplay: {
+          delay: 2000,
+          disableOnInteraction: false,
+        },
+        speed: 800,
+      })
     }
   }
 }
