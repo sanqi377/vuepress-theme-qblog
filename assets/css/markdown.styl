@@ -1,0 +1,143 @@
+@import '~prismjs/themes/prism-tomorrow.css'
+
+.dark {
+  .single-content {
+    p {
+      color: var(--text-color) !important;
+    }
+
+    code {
+      background-color: #f8f8f8 !important;
+      color: #f0506e !important;
+    }
+
+    h1, h2, h3, h4 {
+      color: #e5e8ff !important;
+
+      &:hover .header-anchor {
+        opacity: 1;
+        color: var(--dark-ac-btn-hover) !important;
+      }
+    }
+
+    div[class*=language-] {
+      background-color: var(--dark-bg) !important;
+
+      code {
+        color: hsla(0, 0%, 100%, .87) !important;
+      }
+    }
+  }
+}
+
+.single-content {
+  line-height: 1.85;
+
+  div[class*=language-] {
+    border-radius: 8px;
+    margin: 16px 0;
+    background-color: #e5ede8;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: 0;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    code {
+      display: block;
+      width: fit-content;
+      min-width: 100%;
+      line-height: 1.7 !important;
+      font-size: 14px;
+      color: #404040;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+
+  div[class*=language-] pre {
+    margin: 0;
+    padding: 30px;
+    background: transparent;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: 0;
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  code {
+    margin: 0 2px;
+    padding: 0 5px;
+    background-color: #e5ede8;
+    color: #ff7043;
+    border-radius: 3px;
+  }
+
+  h1, h2, h3, h4 {
+    color: #333;
+    margin: 40px 0 20px 0;
+    cursor: default;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:hover .header-anchor {
+      opacity: 1;
+      color: #ff7043;
+    }
+
+    .header-anchor {
+      float: right;
+      opacity: .08;
+      border-bottom: none;
+      position: relative;
+      padding: 0;
+      border-radius: 8px !important;
+      line-height: 1;
+      font-size: 1.6rem;
+      color: #fff;
+      text-decoration: none;
+      transition: all .2s;
+      margin-top: 5px;
+    }
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  p {
+    color: #404040;
+    margin: 20px 0;
+  }
+}

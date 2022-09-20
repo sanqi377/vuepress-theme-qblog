@@ -1,7 +1,7 @@
 {
   "name": "vuepress-theme-qblog",
-  "version": "1.2.7",
-  "description": "一款简约、大气、多配置、贼强大的 VuePress 主题.",
+  "version": "1.2.6",
+  "description": "一款多配置、贼强大的 VuePress 主题.",
   "keywords": [
     "vuepress-theme-blog",
     "vuepress-theme",

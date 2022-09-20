@@ -164,6 +164,8 @@ module.exports = (options = {}, context) => {
                 return $page.pageType = 'about';
             } else if ($page.path === '/work/') {
                 return $page.pageType = 'work';
+            } else if ($page.path === '/circle/') {
+                return $page.pageType = 'circle';
             }
             if ($page.pid === 'post') {
                 const {_strippedContent} = $page;
@@ -193,6 +195,12 @@ module.exports = (options = {}, context) => {
                     path: '/work/',
                     frontmatter: {
                         title: '精选项目'
+                    }
+                },
+                {
+                    path: '/circle/',
+                    frontmatter: {
+                        title: '圈儿'
                     }
                 }
             ];

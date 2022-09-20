@@ -264,64 +264,6 @@ export default {
   transform: translateY(20px);
 }
 
-.loading {
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  overflow: visible;
-  font: inherit;
-  color: inherit;
-  text-transform: none;
-  background-color: transparent;
-  display: inline-block;
-  fill: currentcolor;
-  line-height: 0;
-  text-align: center;
-  padding-top: 40px;
-  width: 100%;
-
-  svg {
-    overflow: hidden;
-    animation: spinner-rotate 1.4s linear infinite;
-    transform: translate(0, 0);
-    max-width: 100%;
-    height: auto;
-    box-sizing: border-box;
-
-    circle {
-      stroke-dasharray: 88px;
-      stroke-dashoffset: 0;
-      transform-origin: center;
-      animation: spinner-dash 1.4s ease-in-out infinite;
-      stroke-width: 1;
-      stroke-linecap: round;
-    }
-  }
-}
-
-@keyframes spinner-rotate {
-  0% {
-    transform: rotate(0)
-  }
-  100% {
-    transform: rotate(270deg)
-  }
-}
-
-@keyframes spinner-dash {
-  0% {
-    stroke-dashoffset: 88px
-  }
-  50% {
-    stroke-dashoffset: 22px;
-    transform: rotate(135deg)
-  }
-  100% {
-    stroke-dashoffset: 88px;
-    transform: rotate(450deg)
-  }
-}
-
 .normal_list {
   background: var(--light-medium-bg);
 

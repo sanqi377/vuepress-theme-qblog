@@ -14,7 +14,7 @@
       <div class="chat-header">全部评论
         <i class="ri-close-line icon-close" @click="hiddenChat"></i>
       </div>
-      <div class="full">
+      <div class="full single-content">
         <div class="chat-body">
           <div class="item" v-for="item in commentList">
             <div class="left"><img :src="item.avatar" alt="avatar"></div>
@@ -47,7 +47,12 @@
           </div>
         </div>
         <div :class="`dialog-overlay ${!dialogShow ? 'dialogOut' : ''}`" style="z-index: 2022;"
-             v-show="dialogShow"></div>
+             v-show="dialogShow || loading"></div>
+        <div class="loading" v-show="loading">
+          <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+            <circle fill="none" stroke="#8c92b3" cx="15" cy="15" r="14"></circle>
+          </svg>
+        </div>
         <div :class="`comment-dialog ${!dialogShow ? 'dialogOut' : ''}`" v-show="dialogShow">
           <div class="dialog-header">输入昵称和邮箱</div>
           <div class="dialog-content">
@@ -97,7 +102,8 @@ export default {
               `<p id="parentComment" style="display: none"><span class="text-muted">回复</span><span class="text-primary"> ${item.original.value} </span><span class="text-muted">的评论：</span><span class="text-muted">${item.original.key}</span></p><span class="anT" id="commentAt" contenteditable="false"><a>@${item.original.value}</a></span>`
           );
         },
-      }
+      },
+      loading: false
     }
   },
   async mounted() {
@@ -114,8 +120,8 @@ export default {
     async initAV() {
       const AV = await import('leancloud-storage')
       AV.init({
-        appId: "OYHyWvAYJDOvxnw2ik8Hke4m-gzGzoHsz",
-        appKey: "2QNOJlXziQBGgcoNfG9y4kYV",
+        appId: this.$site.themeConfig.comment.appId,
+        appKey: this.$site.themeConfig.comment.appKey,
         serverURL: "https://oyhywvay.lc-cn-n1-shared.com"
       });
       return AV
@@ -237,13 +243,15 @@ export default {
       comment.set('content', this.commentText);
       let _this = this
       // 将对象保存到云端
+      _this.dialogShow = false
+      _this.loading = true
       comment.save().then(res => {
         AV.Cloud.run("sendEmail", {
           email: emailConfig.email,
           title: emailConfig.title,
           content: emailConfig.emailHtml
-        }).then(
-            function (data) {
+        }).then(data => {
+              _this.loading = false
               if (dom) {
                 _this.$toast.success("回复评论成功", {
                   position: "top-right",
@@ -277,9 +285,22 @@ export default {
               }
               console.log(data)
               // 处理结果
-            },
-            function (err) {
-              // 处理报错
+            }, (err) => {
+              console.log('评论发送失败')
+              _this.$toast.error("评论发布失败，请重试~", {
+                position: "top-right",
+                timeout: 1500,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+              });
             }
         );
         // 成功保存之后，执行其他逻辑
@@ -484,7 +505,7 @@ export default {
 #chat {
   box-shadow: 0;
   background-color: var(--lightmedium-bg-rgba);
-  z-index: 2006;
+  z-index: 1050;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-radius: 12px;
@@ -499,6 +520,12 @@ export default {
   transition: transform .3s, -webkit-transform .3s;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+
+  .loading {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
   .full {
     width: 100%;
@@ -684,6 +711,7 @@ export default {
         font-size: 13px;
         position: relative;
         color: #404040;
+        overflow-y: scroll;
 
         .anT {
           background: yellow;

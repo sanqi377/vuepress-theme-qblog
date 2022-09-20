@@ -25,6 +25,7 @@
             </div>
           </div>
           <Home v-if="['home','categoryItem'].includes($page.pageType)"/>
+          <Circles v-else-if="$page.pageType === 'circle'"/>
           <Link v-else-if="$page.pageType === 'link'"/>
           <Post v-else/>
         </div>
@@ -39,6 +40,7 @@ import Nav from "./components/Nav";
 import Home from './components/Home'
 import Post from "./components/Post";
 import Link from "./components/Link";
+import Circles from "./components/Circles";
 import 'remixicon/fonts/remixicon.css'
 
 export default {
@@ -63,7 +65,6 @@ export default {
 
       // 顶部滚动
       document.querySelector('.page_main').addEventListener("scroll", (e) => {
-
         let dom = e.target.children[0].children[0]
         // 初始化 top_bar 滚动
         if (e.target.scrollTop > 15) {
@@ -92,6 +93,7 @@ export default {
     Home,
     Post,
     Link,
+    Circles
   },
 }
 </script>
