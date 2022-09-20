@@ -4,16 +4,36 @@ const md5 = require('js-md5')
 
 dayjs.extend(dayjsPluginUTC)
 
+
+/**
+ * 计数
+ * @param content
+ * @returns {[number,number]}
+ */
 const counter = (content) => {
     const cn = (content.match(/[\u4E00-\u9FA5]/g) || []).length;
     const en = (content.replace(/[\u4E00-\u9FA5]/g, '').match(/[a-zA-Z0-9_\u0392-\u03c9\u0400-\u04FF]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af\u0400-\u04FF]+|[\u00E4\u00C4\u00E5\u00C5\u00F6\u00D6]+|\w+/g) || []).length;
     return [cn, en];
 };
+
+/**
+ * 获取阅读时长
+ * @param content
+ * @param cn
+ * @param en
+ * @returns {string|number}
+ */
 const calcReadingTime = (content, {cn = 300, en = 160} = {}) => {
     const len = counter(content);
     const readingTime = len[0] / cn + len[1] / en;
     return readingTime < 1 ? '1' : parseInt(readingTime, 10);
 }
+
+/**
+ * 获取文章字符个数
+ * @param content
+ * @returns {string|number}
+ */
 const wordcount = (content) => {
     const len = counter(content);
     const count = len[0] + len[1];
@@ -23,6 +43,11 @@ const wordcount = (content) => {
     return Math.round(count / 100) / 10 + 'k';
 }
 
+/**
+ * 转换时间
+ * @param dateTimeStamp
+ * @returns {string}
+ */
 const timeAgo = (dateTimeStamp) => {
     //转换为时间戳
     let thisTime = dateTimeStamp;
@@ -54,6 +79,11 @@ const timeAgo = (dateTimeStamp) => {
     return result
 }
 
+/**
+ * 生成加密路由
+ * @param str
+ * @returns {string}
+ */
 const encode = (str) => {
     //定义密钥，36个字母和数字
     const key = "ABC012DEF345GHI678JKL9MNOPQRSTUVWXYZ";
@@ -70,6 +100,46 @@ const encode = (str) => {
         s += a[b3] + a[b2] + a[b1]; //根据余数值映射到密钥中对应下标位置的字符
     }
     return s.toLocaleLowerCase();
+}
+
+/**
+ * 生成简介
+ * @param text
+ * @param length
+ * @returns {string|*}
+ */
+const generateBrief = (text, length) => {
+    if (text.length < length) return text;
+    var Foremost = text.substr(0, length);
+    var re = /<(\/?)(BODY|SCRIPT|P|DIV|H1|H2|H3|H4|H5|H6|ADDRESS|PRE|TABLE|TR|TD|TH|INPUT|SELECT|TEXTAREA|OBJECT|A|UL|OL|LI|BASE|META|LINK|HR|BR|PARAM|IMG|AREA|INPUT|SPAN)[^>]*(>?)/ig;
+    var Singlable = /BASE|META|LINK|HR|BR|PARAM|IMG|AREA|INPUT/i
+    var Stack = new Array(), posStack = new Array();
+    while (true) {
+        var newone = re.exec(Foremost);
+        if (newone == null) break;
+        if (newone[1] == "") {
+            var Elem = newone[2];
+            if (Elem.match(Singlable) && newone[3] != "") {
+                continue;
+            }
+            Stack.push(newone[2].toUpperCase());
+            posStack.push(newone.index);
+            if (newone[3] == "") break;
+        } else {
+            var StackTop = Stack[Stack.length - 1];
+            var End = newone[2].toUpperCase();
+            if (StackTop == End) {
+                Stack.pop();
+                posStack.pop();
+                if (newone[3] == "") {
+                    Foremost = Foremost + ">";
+                }
+            }
+        }
+    }
+    var cutpos = posStack.shift();
+    Foremost = Foremost.substring(0, cutpos);
+    return Foremost;
 }
 
 module.exports = (options = {}, context) => {
@@ -92,6 +162,8 @@ module.exports = (options = {}, context) => {
                 return $page.pageType = 'link';
             } else if ($page.path === '/about/') {
                 return $page.pageType = 'about';
+            } else if ($page.path === '/work/') {
+                return $page.pageType = 'work';
             }
             if ($page.pid === 'post') {
                 const {_strippedContent} = $page;
@@ -100,6 +172,7 @@ module.exports = (options = {}, context) => {
                 $page.readingTime = calcReadingTime(content, context.themeConfig.wordPerminute);
                 $page.timeAgo = timeAgo(dayjs.utc($page.frontmatter.date).format('YYYY-MM-DD'))
                 $page.frontmatter.permalink = `/p/${encode(md5($page.frontmatter.title))}.html`
+                $page.dsc = generateBrief(content.replace(/[^\u4e00-\u9fa5]/gi, ""), 100)
             }
         },
         additionalPages() {
@@ -114,6 +187,12 @@ module.exports = (options = {}, context) => {
                     path: '/about/',
                     frontmatter: {
                         title: '关于本站'
+                    }
+                },
+                {
+                    path: '/work/',
+                    frontmatter: {
+                        title: '精选项目'
                     }
                 }
             ];

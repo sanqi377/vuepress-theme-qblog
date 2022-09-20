@@ -6,8 +6,13 @@
 }
 
 @font-face {
-    font-weight: 400;
     font-style: normal;
-    font-family: Icon;
-    src: url('../font/Icon.woff') format("woff")
+    font-family: 'eafont';
+    src: url('../font/eafont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'HarmonyOS_M';
+    font-style: normal;
+    src: url('../font/HarmonyOS.woff2') format('truetype');
 }

@@ -5,15 +5,14 @@
         <div class="item">
           <div>共 <span>{{ commentList.length }}</span> 条评论</div>
           <div>
-            <font-awesome-icon class="post-meta-icon" :icon="['fas', 'message']"/>
+            <i class="ri-chat-4-line"></i>
           </div>
         </div>
-        <div class="comment-bg"></div>
       </div>
     </div>
     <div id="chat" :class="chatHiddenClass" v-show="chatHiddenClass">
       <div class="chat-header">全部评论
-        <font-awesome-icon class="icon-close" :icon="['fas', 'xmark']" @click="hiddenChat"/>
+        <i class="ri-close-line icon-close" @click="hiddenChat"></i>
       </div>
       <div class="full">
         <div class="chat-body">
@@ -77,7 +76,6 @@ import dayjsPluginTIMEZONE from 'dayjs/plugin/timezone'
 dayjs.extend(dayjsPluginTIMEZONE)
 
 export default {
-  name: "Comment",
   data() {
     return {
       userInfo: JSON.parse(window.sessionStorage.getItem("emailInfo")) || {},
@@ -104,6 +102,13 @@ export default {
   },
   async mounted() {
     await this.getCommentList()
+  },
+  watch: {
+    $route: {
+      async handler(to, from) {
+        await this.getCommentList()
+      },
+    }
   },
   methods: {
     async initAV() {
@@ -301,10 +306,73 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.dark {
+  #chat {
+    background-color: var(--dark-medium-bg-rgba) !important;
+    box-shadow: 0 8px 16px -4px rgb(0 0 0 / 31%) !important;
+
+    .name {
+      color: var(--dark-color) !important;
+    }
+
+    .date {
+      color: var(--text-color) !important;
+    }
+
+    .chat-header {
+      background-color: var(--dark-body-bg) !important;
+      color: var(--dark-color) !important;
+    }
+
+    .comment-post button {
+      background-color: var(--dark-ac-btn) !important;
+      color: var(--dark-color) !important;
+
+      &:hover {
+        background: var(--dark-ac-btn-hover) !important;
+      }
+    }
+
+    .chat-footer {
+      background-color: var(--dark-medium-bg) !important;
+
+      .content-editable {
+        color: var(--dark-color) !important;
+      }
+
+      .content-editable:empty:before {
+        color: var(--dark-color) !important;
+      }
+
+      a {
+        color: var(--dark-color) !important;
+      }
+    }
+  }
+
+  #comments {
+    background: var(--dark-ac-btn) !important;
+
+    &:hover {
+      background: var(--dark-ac-btn-hover) !important;
+    }
+
+    i {
+      color: #fff !important;
+    }
+  }
+}
+
 .chatOut {
   animation-fill-mode: both;
   animation-name: tinUpOut;
   animation-duration: 2s;
+}
+
+.chatIn {
+  animation-fill-mode: both;
+  animation-name: tinUpIn;
+  animation-duration: .3s;
 }
 
 .dialogOut {
@@ -340,6 +408,15 @@ export default {
   }
 }
 
+@keyframes tinUpIn {
+  from {
+    transform: translateY(300%)
+  }
+  to {
+    transform: translateY(0)
+  }
+}
+
 @keyframes tinRightIn {
   0% {
     opacity: 0;
@@ -355,13 +432,62 @@ export default {
   }
 }
 
+#comments {
+  position: absolute;
+  width: 260px;
+  right: 20px;
+  color: #fff;
+  transition: all .3s;
+  height: 60px;
+  padding: 0 .9em;
+  animation-fill-mode: both;
+  animation-name: tinRightIn;
+  animation-duration: 2s;
+  align-items: center;
+  display: flex;
+  bottom: 0;
+  opacity: 1;
+  border: 0;
+  border-bottom: 0;
+  z-index: 2000;
+  border-radius: 12px 12px 0 0;
+  cursor: pointer;
+  background: var(--light-ac-btn);
+
+  .content {
+    width: 100%;
+    padding: 0 10px;
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 20px;
+      width: 100%;
+      align-items: center;
+      position: relative;
+    }
+
+    i {
+      margin-top: 9px;
+      font-size: 30px;
+      display: inline-block;
+    }
+
+    span {
+      font-size: 36px;
+    }
+  }
+}
+
 #chat {
-  box-shadow: 0 8px 16px -4px rgb(0 0 0 / 31%);
-  background-color: hsla(0, 0%, 9%, .7);
+  box-shadow: 0;
+  background-color: var(--lightmedium-bg-rgba);
   z-index: 2006;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-radius: $cardRadius;
+  border-radius: 12px;
   width: 360px;
   height: 80%;
   left: auto;
@@ -371,10 +497,12 @@ export default {
   position: fixed;
   max-height: 100%;
   transition: transform .3s, -webkit-transform .3s;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 
   .full {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 33px);
     color: #d4d4d5;
 
     .dialog-overlay {
@@ -502,13 +630,12 @@ export default {
 
     .chat-footer {
       border-top: 1px solid hsla(210, 8%, 51%, .09);
-      box-shadow: 0 4px 23px 0 rgb(61 61 61 / 50%);
-      background-color: #171717;
+      background-color: hsla(151, 23%, 58%, .5);
       height: 140px;
       padding: 0;
       overflow: hidden;
-      border-bottom-left-radius: $cardRadius;
-      border-bottom-right-radius: $cardRadius;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
 
       > div {
         box-sizing: border-box;
@@ -526,16 +653,21 @@ export default {
             border-top-left-radius: 10px;
             cursor: pointer;
             color: #fff;
-            background-color: #50a1ff;
+            background-color: var(--light-ac-btn);
             font-size: 14px;
             border: 0;
-            padding: 8px 30px;
+            padding: 7px 30px;
+            transition: all .2s;
+
+            &:hover {
+              background: var(--dark-ac-btn-hover);
+            }
           }
         }
 
         a {
           font-size: 12px;
-          color: inherit;
+          color: #404040;
           text-decoration: none;
           cursor: pointer;
           outline: 0;
@@ -551,6 +683,7 @@ export default {
         box-sizing: border-box;
         font-size: 13px;
         position: relative;
+        color: #404040;
 
         .anT {
           background: yellow;
@@ -563,7 +696,7 @@ export default {
         &:empty:before {
           content: attr(placeholder);
           display: block;
-          color: #666;
+          color: #404040;
         }
       }
     }
@@ -586,14 +719,14 @@ export default {
             margin-bottom: .25rem;
 
             .name {
-              color: #d4d4d5;
+              color: #32395c;
               font-weight: 600;
               margin-right: .25rem;
               font-size: 12px;
             }
 
             .date {
-              color: #d4d4d5;
+              color: var(--text-dark);
               font-size: 12px;
               padding-left: .25rem;
               opacity: .7;
@@ -617,11 +750,11 @@ export default {
   }
 
   .chat-header {
-    background-color: #2b2b2b;
+    background-color: var(--light-ac-btn);
     color: #fff;
-    box-shadow: 0 15px 25px -13px rgb(43 43 43 / 50%);
-    border-top-left-radius: $cardRadius;
-    border-top-right-radius: $cardRadius;
+    box-shadow: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -635,78 +768,10 @@ export default {
 
     .icon-close {
       position: absolute;
-      right: 20px;
-      top: 18px;
+      right: 12px;
+      top: 13px;
       cursor: pointer;
-      width: 25px;
-      height: 25px;
-    }
-  }
-}
-
-#comments {
-  position: fixed;
-  width: 260px;
-  right: 20px;
-  color: #fff;
-  transition: all .3s;
-  height: 60px;
-  padding: 0 .9em;
-  animation-fill-mode: both;
-  animation-name: tinRightIn;
-  animation-duration: 2s;
-  align-items: center;
-  display: flex;
-  bottom: 0;
-  opacity: 1;
-  border: 1px solid #42444a;
-  border-bottom: 0;
-  z-index: 2000;
-  border-radius: $cardRadius $cardRadius 0 0;
-  cursor: pointer;
-
-
-  &:hover .comment-bg {
-    border: 1px solid #0084ff;
-    border-bottom: 0;
-  }
-
-
-  .content {
-    width: 100%;
-    padding: 0 10px;
-
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 20px;
-      width: 100%;
-      align-items: center;
-      position: relative;
-    }
-
-    .comment-bg {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      filter: blur(1px);
-      background: #1d1b26;
-      border-radius: $cardRadius $cardRadius 0 0;
-      box-shadow: 0 8px 16px -4px rgb(0 0 0 / 31%);
-    }
-
-    svg {
-      margin-top: 9px;
-    }
-
-    span {
-      font-size: 36px;
+      font-size: 25px;
     }
   }
 }

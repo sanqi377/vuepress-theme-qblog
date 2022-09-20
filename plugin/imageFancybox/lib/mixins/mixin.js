@@ -3,7 +3,7 @@ import {Fancybox} from "@fancyapps/ui/src/Fancybox/Fancybox.js";
 
 export default {
     mounted() {
-        Fancybox.bind('.vp-doc img', {
+        Fancybox.bind('.single-content img', {
             infinite: false,
             parentEl: document.querySelector('[data-fancybox="gallery"]')
         });

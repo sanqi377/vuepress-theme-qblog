@@ -1,4 +1,5 @@
 const {resolve} = require("path");
+
 module.exports = (options, ctx) => {
     return {
         name: 'vuepress-plugin-image',

@@ -1,20 +1,16 @@
 const path = require('path')
 module.exports = (options, {themeConfig}) => {
     /**
-     * Default theme configuration
+     * 默认主题配置
      */
     themeConfig = Object.assign(themeConfig, {
         blogTitle: themeConfig.blogTitle || 'San\' qi',
+        homeCoverHide: themeConfig.homeCoverHide || true,
         nav: themeConfig.nav || [
             {
-                text: '文库',
-                items: [
-                    {
-                        text: '文章列表',
-                        icon: 'book-open',
-                        link: 'archives'
-                    }
-                ]
+                text: '友链',
+                icon: 'ri-link',
+                link: '/link'
             }
         ],
         category: themeConfig.category || [
@@ -22,80 +18,6 @@ module.exports = (options, {themeConfig}) => {
                 text: "经验分享",
                 link: "experience"
             }
-        ],
-        bannerGroup: themeConfig.bannerGroup || [
-            [
-                {
-                    background: '#989bf8',
-                    imgUrl: '/images/icon/6320adb6425f0.webp',
-                    title: 'AfterEffect'
-                },
-                {
-                    background: '#fff',
-                    imgUrl: '/images/icon/6320ae1c443e1.webp',
-                    title: 'Sketch'
-                }
-            ],
-            [
-                {
-                    background: '#57b6e6',
-                    imgUrl: '/images/icon/6320ae611acb4.webp',
-                    title: 'docker'
-                },
-                {
-                    background: '#4082c3',
-                    imgUrl: '/images/icon/6320ae86dae3e.webp',
-                    title: 'Photoshop'
-                }
-            ],
-            [
-                {
-                    background: '#fff',
-                    imgUrl: '/images/icon/6320aea440bc2.webp',
-                    title: 'video'
-                },
-                {
-                    background: '#fff',
-                    imgUrl: '/images/icon/6320aece3325a.webp',
-                    title: 'Python'
-                }
-            ],
-            [
-                {
-                    background: '#eb6840',
-                    imgUrl: '/images/icon/6320aeee7c182.webp',
-                    title: 'Swift'
-                },
-                {
-                    background: '#8f55ba',
-                    imgUrl: '/images/icon/6320af12e692b.webp',
-                    title: 'Principle'
-                }
-            ],
-            [
-                {
-                    background: '#f29e39',
-                    imgUrl: '/images/icon/6320af2eb0a38.webp',
-                    title: 'illustrator'
-                },
-                {
-                    background: '#2c51db',
-                    imgUrl: '/images/icon/6320af4ab2683.webp',
-                    title: 'CSS3'
-                }
-            ],
-            [
-                {
-                    background: '#f7cb4f',
-                    imgUrl: '/images/icon/6320af7860a7f.webp',
-                    title: 'JS'
-                },
-                {
-                    background: '#e9572b',
-                    imgUrl: '/images/icon/6320af934f9e4.webp',
-                    title: 'HTML'
-                }
-            ]
         ],
         logo: themeConfig.logo || '/logo.png',
     })
@@ -153,8 +75,5 @@ module.exports = (options, {themeConfig}) => {
     ];
     return {
         plugins,
-        alias: {
-            assets: path.resolve(__dirname, 'assets'),
-        }
     }
 }

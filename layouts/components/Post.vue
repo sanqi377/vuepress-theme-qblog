@@ -1,81 +1,122 @@
 <template>
-  <div>
-    <header id="page-header" class="post-bg">
-      <Nav/>
-      <PostTop/>
-    </header>
-    <main id="content-inner">
-      <div id="post">
-        <div class="warp">
-          <article id="article-container">
-            <Content class="vp-doc"/>
-          </article>
+  <div class="single_wrap">
+    <div class="blog_header">
+      <h2 class="entry-title">{{ postInfo.title }}</h2>
+      <ul>
+        <div class="header_meta">
+              <span class="single_time">
+                <i class="ri-time-line"></i>
+                <time itemprop="datePublished" :datetime="resolvedDate()">  {{ resolvedDate() }}</time>
+              </span>
+          <span class="post_views"><i class="ri-eye-line"></i>25</span>
         </div>
+        <router-link class="category" :to="`/categories/${category.link}/`">{{ category.text }}</router-link>
+      </ul>
+    </div>
+    <div class="single-inner">
+      <div class="single-content">
+        <Content/>
       </div>
-      <sideBar/>
-    </main>
-    <Comment/>
-    <Footer/>
+    </div>
   </div>
 </template>
 
 <script>
-import Nav from './Nav.vue'
-import PostTop from './PostTop.vue'
-import Comment from "./Comment.vue"
-import sideBar from "./sideBar.vue";
-import Footer from "./Footer.vue";
+import dayjs from 'dayjs'
+import dayjsPluginUTC from 'dayjs/plugin/utc'
+
+dayjs.extend(dayjsPluginUTC)
 
 export default {
-  components: {
-    Nav,
-    PostTop,
-    Comment,
-    sideBar,
-    Footer
+  data() {
+    return {
+      postInfo: {},
+      category: {}
+    }
   },
+  mounted() {
+    this.postInfo = this.$page.frontmatter
+    this.category = this.$site.themeConfig.category.filter(el => el.link === this.$page.frontmatter.category)[0]
+  },
+  methods: {
+    resolvedDate() {
+      return dayjs.utc(this.$page.frontmatter.date).format('YYYY-MM-DD')
+    },
+  }
 }
 
 </script>
 
 <style lang="stylus" scoped>
-#content-inner {
-  max-width: 1400px;
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  margin: 0 auto;
+.index_banner {
+  overflow: hidden;
 
-  #post {
-    box-shadow: 0 8px 16px -4px #00000050;
-    border-radius: $cardRadius;
-    background: #1d1b26;
-    border: 1px solid #42444a;
-    width: 80%;
+  .cover-div {
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    filter: brightness(90%);
 
-    .warp {
-      padding: 1rem 2rem;
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
     }
   }
 }
 
-#page-header {
-  position: relative;
-  width: 100%;
-  height: 60px;
-  background-image: none !important;
-  display: flex;
-  justify-content: center;
+.single_wrap {
+  background: var(--light-medium-bg);
+  padding: 40px;
 
-  &.post-bg {
-    background-color: #7d7d5d !important;
-    transition: 0s;
-    overflow: hidden;
-    height: 30rem;
+  .single-inner {
+    padding: 20px 0;
+    border-top: 1px solid var(--light-border);
   }
 
-  &.post-bg #nav {
-    backdrop-filter: none !important;
+  .blog_header ul {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 25px;
+    font-size: 13px;
+
+    .category {
+      background: var(--light-icon);
+      color: #7cad95;
+      border-radius: 5px;
+      margin-left: 3px;
+      padding: 5px 8px;
+    }
+
+    .header_meta {
+      display: flex;
+      align-content: center;
+      align-items: center;
+
+      i {
+        margin-right: 3px;
+      }
+
+      .post_views {
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        color: var(--text-dark);
+      }
+
+      .single_time {
+        display: flex;
+        align-items: center;
+        color: var(--text-dark);
+      }
+    }
   }
 }
 </style>

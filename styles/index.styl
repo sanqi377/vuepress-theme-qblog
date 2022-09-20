@@ -1,14 +1,90 @@
-@import '~prismjs/themes/prism-tomorrow.css'
-@keyframes gradient {
-  0% {
-    background-position: 0 50%
+body {
+  background: var(--light-body-bg);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: eafont, HarmonyOS_M, PingFang SC, Hiragino Sans GB, Microsoft YaHei, STHeiti, WenQuanYi Micro Hei, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+
+  &.dark {
+    background: var(--dark-body-bg);
   }
-  50% {
-    background-position: 100% 50%
+}
+
+.dark {
+  .MessageBody {
+    background-color: var(--dark-medium-bg) !important;
+    color: var(--dark-color) !important;
   }
-  100% {
-    background-position: 0 50%
+
+  .ReplyMessageBody {
+    .text-muted {
+      color: var(--text-color) !important;
+    }
   }
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_wrap {
+  width: 1300px;
+  height: 90vh;
+
+  .main_body {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 100%;
+    align-items: center;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+a:visited {
+  color: #252525;
+}
+
+canvas, img, video {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+audio, canvas, iframe, img, svg, video {
+  vertical-align: middle;
+}
+
+ul, ol {
+  margin: 0 0 1.5em 3em;
+}
+
+ol, ul {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 20px 0;
+  font-weight: 400;
+  color: #333;
+  text-transform: none;
+  clear: both;
 }
 
 @keyframes gradient {
@@ -31,9 +107,9 @@
     width: 80px !important;
     background: transparent !important;
     transform: translateX(-50%) !important;
-    height: 9px !important;
+    height: 6px !important;
     margin: 0 auto !important;
-    top: 8px !important;
+    top: 28px !important;
     overflow: hidden !important;
     border-radius: 4px !important;
     border: 1px solid #42444a !important;
@@ -48,11 +124,110 @@
   }
 }
 
-img {
-  max-width: 100%;
-  -webkit-transition: all .2s;
-  -moz-transition: all .2s;
-  -o-transition: all .2s;
-  -ms-transition: all .2s;
-  transition: all .2s;
+// Tribute-specific styles
+.tribute-container {
+  position: absolute;
+  top: 35px;
+  left: 10px;
+  height: auto;
+  max-height: 100px;
+  max-width: 150px;
+  display: block;
+  z-index: 999999;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(#000, 0.13);
+  overflow: auto;
 }
+
+.tribute-container ul {
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid rgba(#000, 0.13);
+  background-clip: padding-box;
+  overflow: hidden;
+}
+
+.tribute-container li {
+  color: #3f5efb;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tribute-container li.highlight,
+.tribute-container li:hover {
+  background: #3f5efb;
+  color: #fff;
+}
+
+.tribute-container li span {
+  font-weight: bold;
+}
+
+.tribute-container li.no-match {
+  cursor: default;
+}
+
+.tribute-container .menu-highlighted {
+  font-weight: bold;
+}
+
+.ReplyMessageBody {
+  font-size: 12px;
+  margin-bottom: .5rem;
+  box-sizing: border-box;
+
+  .text-muted {
+    color: #404040;
+    opacity: .7;
+  }
+
+  .text-primary {
+    color: #ff7c7c;
+  }
+}
+
+.MessageBody {
+  background-color: #7cad95;
+  padding: .4rem .85rem;
+  border-radius: 12px;
+  font-size: 13px;
+  display: inline-block;
+  word-break: break-all;
+  word-wrap: break-word;
+  margin-bottom: .25rem;
+  color: #404040;
+}
+
+.anT {
+  color: #ff7c7c;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  line-height: 2;
+}
+
+.content-editable .anT {
+  color: #ff7c7c;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  background: #30343f !important;
+  line-height: 2;
+  box-shadow: 0 5px 8px -4px #000;
+}
+
+
+//img {
+//  max-width: 100%;
+//  -webkit-transition: all .2s;
+//  -moz-transition: all .2s;
+//  -o-transition: all .2s;
+//  -ms-transition: all .2s;
+//  transition: all .2s;
+//}

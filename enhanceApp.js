@@ -1,9 +1,11 @@
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import Comment from './layouts/components/Comment'
 import "vue-toastification/dist/index.css";
+
 export default ({Vue, options, router, siteData, isServer}) => {
-    Vue.component('FontAwesomeIcon', FontAwesomeIcon)
     Vue.mixin({
         mounted() {
+            Vue.component('Comment', Comment)
+
             import('vue-toastification').then(({default: Toast}) => {
                 Vue.use(Toast, {
                     transition: "Vue-Toastification__fade",
@@ -15,6 +17,7 @@ export default ({Vue, options, router, siteData, isServer}) => {
             import('vue-tribute').then(VueTribute => {
                 Vue.component('VueTribute', VueTribute.default)
             })
+
             // nprogress 魔改 start
             import('nprogress').then((nprogress) => {
                 nprogress.configure({
@@ -23,6 +26,7 @@ export default ({Vue, options, router, siteData, isServer}) => {
                     speed: 500
                 })
                 router.beforeEach((to, from, next) => {
+
                     if (to.path !== from.path) {
                         nprogress.start()
                     }

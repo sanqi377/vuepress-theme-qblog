@@ -4,7 +4,7 @@ export default {
         const timer = setInterval(() => {
             if (document.querySelectorAll('img[data-src]').length > 0) {
                 _this.reRenderImage()
-                document.addEventListener("scroll", _this.reRenderImage)
+                document.querySelector('.page_main').addEventListener("scroll", _this.reRenderImage)
                 clearInterval(timer)
             }
         }, 100)
@@ -26,7 +26,7 @@ export default {
                         img.onload = function () {
                             item.src = img.src
                         }
-                        item.removeAttribute("data-src")//移除属性，下次不再遍历
+                        item.removeAttribute("data-src") //移除属性，下次不再遍历
                     }()
                 }
             })
