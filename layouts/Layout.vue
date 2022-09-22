@@ -10,6 +10,10 @@
                 <div class="top_tool" @click="changeMode"><a><i class="ri-contrast-2-line"></i></a></div>
                 <div class="top_tool"><a><i class="ri-search-line s_toogle_btn"></i></a></div>
               </div>
+              <div class="top_right">
+                <div class="top_tool"><a title="随机前往一个开往项目网站" @click="goTaveling"><i
+                    class="ri-train-fill"></i></a></div>
+              </div>
             </div>
           </header>
           <div class="index_banner"
@@ -55,6 +59,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * 初始化站点
+     */
     initSite() {
       // 检测主题模式
       if (window.localStorage.getItem('mode') === 'dark') {
@@ -78,6 +85,22 @@ export default {
         }
       })
     },
+    /**
+     * 初始化 leancloud
+     * @returns {Promise<void>}
+     */
+    async initAV() {
+      const AV = await import('leancloud-storage')
+      AV.init({
+        appId: this.$site.themeConfig.comment.appId,
+        appKey: this.$site.themeConfig.comment.appKey,
+        serverURL: "https://oyhywvay.lc-cn-n1-shared.com"
+      });
+      return AV
+    },
+    /**
+     * 主题切换
+     */
     changeMode() {
       if (window.localStorage.getItem('mode') === 'dark') {
         document.querySelector("body").className = ''
@@ -86,6 +109,20 @@ export default {
         document.querySelector("body").className = 'dark'
         window.localStorage.setItem('mode', 'dark')
       }
+    },
+    /**
+     * 点击开往
+     */
+    goTaveling() {
+      this.$toast.info("即将跳转到「开往」项目的成员博客", {
+        position: "top-center",
+        timeout: 2500,
+        closeButton: false,
+        onClose: () => {
+          window.open("https://travellings.link", "_blank");
+          console.log('点击了开往 exit')
+        }
+      })
     }
   },
   components: {

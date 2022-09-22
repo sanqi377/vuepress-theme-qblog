@@ -1,6 +1,6 @@
 {
   "name": "vuepress-theme-qblog",
-  "version": "1.2.6",
+  "version": "1.2.9",
   "description": "一款多配置、贼强大的 VuePress 主题.",
   "keywords": [
     "vuepress-theme-blog",
@@ -34,6 +34,7 @@
     "valine": "^1.5.1",
     "vue-toastification": "^1.7.14",
     "vue-tribute": "^1.0.7",
-    "vuepress": "^1.9.7"
+    "vuepress": "^1.9.7",
+    "xgplayer": "^2.32.0"
   }
 }

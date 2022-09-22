@@ -135,7 +135,6 @@ export default {
 <style lang="stylus">
 .page_main {
   z-index: 98;
-  position: relative;
   background: var(--light-medium-bg);
   border-radius: 12px;
   width: 75%;
@@ -152,10 +151,10 @@ export default {
     width: 100%;
     position: sticky;
     top: 0;
+    z-index: 9999;
 
     .top_bar_scroll {
       backdrop-filter: blur(0.5rem) !important;
-      z-index: 9999 !important;
     }
 
     .top_bar {
@@ -182,12 +181,19 @@ export default {
       }
 
       .top_left {
+        margin-left: 15px;
+      }
+
+      .top_right {
+        margin-right: 15px;
+      }
+
+      .top_left, .top_right {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         flex-wrap: nowrap;
         align-items: center;
-        margin-left: 15px;
       }
     }
   }

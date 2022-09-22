@@ -117,15 +117,6 @@ export default {
     }
   },
   methods: {
-    async initAV() {
-      const AV = await import('leancloud-storage')
-      AV.init({
-        appId: this.$site.themeConfig.comment.appId,
-        appKey: this.$site.themeConfig.comment.appKey,
-        serverURL: "https://oyhywvay.lc-cn-n1-shared.com"
-      });
-      return AV
-    },
     valueChange(e) {
       this.commentValue = e.target.innerHTML;
       this.commentText = e.target.innerText;
@@ -134,7 +125,7 @@ export default {
       return dayjs.tz(date, "PRC").format('YYYY-MM-DD HH:mm:ss')
     },
     async getCommentList() {
-      const AV = await this.initAV()
+      const AV = await this.$parent.initAV();
       const query = new AV.Query('Comment');
       query.equalTo('blogPath', this.$route.fullPath);
       query.find().then(res => {
@@ -151,16 +142,7 @@ export default {
         this.$toast.error("请填写评论后再提交", {
           position: "top-right",
           timeout: 1500,
-          closeOnClick: true,
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          draggable: true,
-          draggablePercent: 0.6,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
           closeButton: "button",
-          icon: true,
-          rtl: false
         });
       } else {
         this.dialogShow = true
@@ -171,16 +153,7 @@ export default {
         this.$toast.error("请填写昵称后再确认", {
           position: "top-right",
           timeout: 1500,
-          closeOnClick: true,
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          draggable: true,
-          draggablePercent: 0.6,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
           closeButton: "button",
-          icon: true,
-          rtl: false
         });
         return
       }
@@ -189,16 +162,7 @@ export default {
         this.$toast.error("请填写邮箱后再确认", {
           position: "top-right",
           timeout: 1500,
-          closeOnClick: true,
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          draggable: true,
-          draggablePercent: 0.6,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
           closeButton: "button",
-          icon: true,
-          rtl: false
         });
         return
       }
@@ -208,7 +172,7 @@ export default {
           email: this.userInfo.email
         }))
       }
-      const AV = await this.initAV()
+      const AV = await this.$parent.initAV();
       const dom = document.getElementById("parentComment")
       let emailConfig = {
         title: '',
@@ -256,31 +220,13 @@ export default {
                 _this.$toast.success("回复评论成功", {
                   position: "top-right",
                   timeout: 1500,
-                  closeOnClick: true,
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  draggablePercent: 0.6,
-                  showCloseButtonOnHover: false,
-                  hideProgressBar: true,
                   closeButton: "button",
-                  icon: true,
-                  rtl: false
                 });
               } else {
                 _this.$toast.success("发布评论成功", {
                   position: "top-right",
                   timeout: 1500,
-                  closeOnClick: true,
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  draggablePercent: 0.6,
-                  showCloseButtonOnHover: false,
-                  hideProgressBar: true,
                   closeButton: "button",
-                  icon: true,
-                  rtl: false
                 });
               }
               console.log(data)
@@ -290,16 +236,7 @@ export default {
               _this.$toast.error("评论发布失败，请重试~", {
                 position: "top-right",
                 timeout: 1500,
-                closeOnClick: true,
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                draggable: true,
-                draggablePercent: 0.6,
-                showCloseButtonOnHover: false,
-                hideProgressBar: true,
                 closeButton: "button",
-                icon: true,
-                rtl: false
               });
             }
         );
@@ -327,63 +264,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.dark {
-  #chat {
-    background-color: var(--dark-medium-bg-rgba) !important;
-    box-shadow: 0 8px 16px -4px rgb(0 0 0 / 31%) !important;
-
-    .name {
-      color: var(--dark-color) !important;
-    }
-
-    .date {
-      color: var(--text-color) !important;
-    }
-
-    .chat-header {
-      background-color: var(--dark-body-bg) !important;
-      color: var(--dark-color) !important;
-    }
-
-    .comment-post button {
-      background-color: var(--dark-ac-btn) !important;
-      color: var(--dark-color) !important;
-
-      &:hover {
-        background: var(--dark-ac-btn-hover) !important;
-      }
-    }
-
-    .chat-footer {
-      background-color: var(--dark-medium-bg) !important;
-
-      .content-editable {
-        color: var(--dark-color) !important;
-      }
-
-      .content-editable:empty:before {
-        color: var(--dark-color) !important;
-      }
-
-      a {
-        color: var(--dark-color) !important;
-      }
-    }
-  }
-
-  #comments {
-    background: var(--dark-ac-btn) !important;
-
-    &:hover {
-      background: var(--dark-ac-btn-hover) !important;
-    }
-
-    i {
-      color: #fff !important;
-    }
-  }
-}
-
 .chatOut {
   animation-fill-mode: both;
   animation-name: tinUpOut;
