@@ -62,6 +62,7 @@ export default {
     }
   },
   async mounted() {
+    if (this.$parent.isMobile()) document.getElementById('app').style.display = 'inherit'
     this.Player = await import('xgplayer')
     await this.getQrList()
   },
@@ -96,7 +97,8 @@ export default {
                   innerRotate: true,
                   clockwise: false
                 },
-                lang: 'zh-cn'
+                lang: 'zh-cn',
+                fluid: this.$parent.isMobile() ? true : false
               })
               player.start(e.video)
             })

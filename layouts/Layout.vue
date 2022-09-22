@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="page" class="main_wrap">
+    <div id="page" class="main_wrap" :class="isMobile() ? 'mobile' : ''">
       <div class="main_body">
         <Nav/>
         <div class="page_main">
@@ -31,11 +31,12 @@
           <Home v-if="['home','categoryItem'].includes($page.pageType)"/>
           <Circles v-else-if="$page.pageType === 'circle'"/>
           <Link v-else-if="$page.pageType === 'link'"/>
+          <About v-else-if="$page.pageType === 'about'"/>
           <Post v-else/>
         </div>
       </div>
     </div>
-    <Comment v-if="$page.pid === 'post' || ['link'].includes($page.pageType)"/>
+    <Comment v-if="($page.pid === 'post' || ['link'].includes($page.pageType)) && !isMobile()"/>
   </div>
 </template>
 
@@ -45,9 +46,18 @@ import Home from './components/Home'
 import Post from "./components/Post";
 import Link from "./components/Link";
 import Circles from "./components/Circles";
+import About from "./components/About";
 import 'remixicon/fonts/remixicon.css'
 
 export default {
+  components: {
+    Nav,
+    Home,
+    Post,
+    Link,
+    Circles,
+    About
+  },
   mounted() {
     this.initSite()
   },
@@ -123,15 +133,20 @@ export default {
           console.log('点击了开往 exit')
         }
       })
-    }
-  },
-  components: {
-    Nav,
-    Home,
-    Post,
-    Link,
-    Circles
-  },
+    },
+    /**
+     * 判断是否为移动端
+     * @returns {boolean|boolean}
+     */
+    isMobile() {
+      const ua = navigator.userAgent.toLowerCase();
+      const t1 = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+          ua
+      );
+      const t2 = !ua.match("iphone") && navigator.maxTouchPoints > 1;
+      return t1 || t2;
+    },
+  }
 }
 </script>
 
@@ -139,4 +154,5 @@ export default {
 @require '../assets/css/font.css'
 @require '../assets/css/markdown.styl'
 @require '../assets/css/dark.styl'
+@require '../assets/css/mobile.styl'
 </style>

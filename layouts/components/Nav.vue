@@ -1,29 +1,52 @@
 <template>
-  <div class="left_nav">
-    <div class="left_nav_inner">
-      <div class="top_logo">
-        <router-link to="/">
-          <span>{{ $site.themeConfig.blogTitle }}</span>Blog
-        </router-link>
+  <div :class="`${$parent.isMobile() ? 'tabbar' : 'left_nav'}`">
+    <template v-if="$parent.isMobile()">
+      <div class="footer_nav_box">
+        <div class="inner">
+          <ul>
+            <li :class="`${['home','categoryItem'].includes($page.pageType) || $page.pid === 'post' ? 'active' : ''}`">
+              <router-link to="/">
+                <i class="ri-home-line"/>
+                <span>首页</span>
+              </router-link>
+            </li>
+            <li v-for="(item,idx) in $site.themeConfig.nav" :key="idx"
+                :class="`${$route.fullPath.includes(item.link) ? 'active' : ''}`">
+              <router-link :to="item.link">
+                <i :class="item.icon"/>
+                <span>{{ item.text }}</span>
+              </router-link>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="left_menu_box">
-        <ul id="left_menu" class="menu">
-          <li :class="`${['home','categoryItem'].includes($page.pageType) || $page.pid === 'post' ? 'active' : ''}`">
-            <router-link to="/">
-              <i class="ri-home-line"/>
-              <span>首页</span>
-            </router-link>
-          </li>
-          <li v-for="(item,idx) in $site.themeConfig.nav" :key="idx"
-              :class="`${$route.fullPath.includes(item.link) ? 'active' : ''}`">
-            <router-link :to="item.link">
-              <i :class="item.icon"/>
-              <span>{{ item.text }}</span>
-            </router-link>
-          </li>
-        </ul>
+    </template>
+    <template v-else>
+      <div class="left_nav_inner">
+        <div class="top_logo">
+          <router-link to="/">
+            <span>{{ $site.themeConfig.blogTitle }}</span>Blog
+          </router-link>
+        </div>
+        <div class="left_menu_box">
+          <ul id="left_menu" class="menu">
+            <li :class="`${['home','categoryItem'].includes($page.pageType) || $page.pid === 'post' ? 'active' : ''}`">
+              <router-link to="/">
+                <i class="ri-home-line"/>
+                <span>首页</span>
+              </router-link>
+            </li>
+            <li v-for="(item,idx) in $site.themeConfig.nav" :key="idx"
+                :class="`${$route.fullPath.includes(item.link) ? 'active' : ''}`">
+              <router-link :to="item.link">
+                <i :class="item.icon"/>
+                <span>{{ item.text }}</span>
+              </router-link>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
