@@ -1,6 +1,6 @@
 <template>
-  <div :class="`${$parent.isMobile() ? 'tabbar' : 'left_nav'}`">
-    <template v-if="$parent.isMobile()">
+  <div :class="`${$parent.$data.isMobile ? 'tabbar' : 'left_nav'}`">
+    <template v-if="$parent.$data.isMobile">
       <div class="footer_nav_box">
         <div class="inner">
           <ul>

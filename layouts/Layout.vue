@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="page" class="main_wrap" :class="isMobile() ? 'mobile' : ''">
+    <div id="page" class="main_wrap" :class="isMobile ? 'mobile' : ''">
       <div class="main_body">
         <Nav/>
         <div class="page_main">
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <Comment v-if="($page.pid === 'post' || ['link'].includes($page.pageType)) && !isMobile()"/>
+    <Comment v-if="($page.pid === 'post' || ['link'].includes($page.pageType)) && !isMobile"/>
   </div>
 </template>
 
@@ -50,6 +50,11 @@ import About from "./components/About";
 import 'remixicon/fonts/remixicon.css'
 
 export default {
+  data() {
+    return {
+      isMobile: null
+    }
+  },
   components: {
     Nav,
     Home,
@@ -59,6 +64,8 @@ export default {
     About
   },
   mounted() {
+    this.isMobile = this.getIsMobile()
+    if (this.isMobile) document.getElementById('app').style.display = 'inherit'
     this.initSite()
   },
   watch: {
@@ -138,13 +145,13 @@ export default {
      * 判断是否为移动端
      * @returns {boolean|boolean}
      */
-    isMobile() {
-      const ua = navigator.userAgent.toLowerCase();
+    getIsMobile() {
+      const ua = window.navigator.userAgent.toLowerCase();
       const t1 = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
           ua
       );
-      const t2 = !ua.match("iphone") && navigator.maxTouchPoints > 1;
-      return t1 || t2;
+      const t2 = !ua.match("iphone") && window.navigator.maxTouchPoints > 1;
+      return t1 || t2
     },
   }
 }
