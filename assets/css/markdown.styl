@@ -1,37 +1,22 @@
 @import '~prismjs/themes/prism-tomorrow.css'
 
-.dark {
-  .single-content {
-    p {
-      color: var(--text-color) !important;
-    }
-
-    code {
-      background-color: #f8f8f8 !important;
-      color: #f0506e !important;
-    }
-
-    h1, h2, h3, h4 {
-      color: #e5e8ff !important;
-
-      &:hover .header-anchor {
-        opacity: 1;
-        color: var(--dark-ac-btn-hover) !important;
-      }
-    }
-
-    div[class*=language-] {
-      background-color: var(--dark-bg) !important;
-
-      code {
-        color: hsla(0, 0%, 100%, .87) !important;
-      }
-    }
-  }
-}
-
 .single-content {
   line-height: 1.85;
+
+  ul, ol {
+    margin: 0;
+  }
+
+  blockquote {
+    border-left: 6px solid var(--light-ac-btn) !important;
+    background: var(--light-icon);
+    margin: 0 !important;
+    padding: 20px 25px !important;
+
+    p {
+      margin: 0 !important;
+    }
+  }
 
   div[class*=language-] {
     border-radius: 8px;
@@ -100,7 +85,7 @@
     border-radius: 3px;
   }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5, h6 {
     color: #333;
     margin: 40px 0 20px 0;
     cursor: default;

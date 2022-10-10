@@ -1,4 +1,50 @@
 .dark {
+  .single-content {
+    p {
+      color: var(--text-color) !important;
+    }
+
+    code {
+      background-color: #f8f8f8 !important;
+      color: #f0506e !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #e5e8ff !important;
+
+      &:hover .header-anchor {
+        opacity: 1;
+        color: var(--dark-ac-btn-hover) !important;
+      }
+    }
+
+    div[class*=language-] {
+      background-color: var(--dark-bg) !important;
+
+      code {
+        color: hsla(0, 0%, 100%, .87) !important;
+      }
+    }
+
+    blockquote {
+      border-left: 6px solid var(--dark-ac-btn) !important;
+      background: var(--btn-normal) !important;
+      color: var(--dark-icon) !important;
+    }
+
+    ol, ul {
+      color: var(--text-color) !important;
+    }
+  }
+
+  .wid_ad_social a {
+    background: var(--dark-ac-btn) !important;
+  }
+
+  .adinfo_widget {
+    border-bottom: 1px solid var(--dark-border) !important;
+  }
+
   .MessageBody {
     background-color: var(--dark-medium-bg) !important;
     color: var(--dark-color) !important;

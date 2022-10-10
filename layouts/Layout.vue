@@ -16,8 +16,7 @@
               </div>
             </div>
           </header>
-          <div class="index_banner"
-               style="background-image: url(https://www.ideaopen.cn/wp-content/uploads/2022/09/14303736_1589188083306_android.jpg);">
+          <div class="index_banner" style="background-image: url(/images/home_top_bg.jpg)">
             <div class="user_info">
               <div class="top">
                 <div class="left">

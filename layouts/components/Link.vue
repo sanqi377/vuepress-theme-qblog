@@ -64,10 +64,15 @@
           }
 
           .links-desc {
+            width: 100%;
             font-size: 12px;
             line-height: 20px;
             font-weight: 700;
             color: var(--text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
           }
         }
       }

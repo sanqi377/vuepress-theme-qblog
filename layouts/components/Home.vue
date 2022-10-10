@@ -37,10 +37,10 @@
             <div class="entry-footer">
               <div class="post_footer_meta">
                 <div class="left">
-                    <span class="comnum">
-                      <i class="ri-chat-4-line"></i>
-                      <small>2</small>
-                    </span>
+<!--                    <span class="comnum">-->
+<!--                      <i class="ri-chat-4-line"></i>-->
+<!--                      <small>2</small>-->
+<!--                    </span>-->
                 </div>
                 <div class="right">
                   <div class="normal_cat" v-for="e in item.frontmatter.tags"># {{ e }}</div>
